@@ -6,7 +6,7 @@
 /*   By: fesper-s <fesper-s@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 14:52:21 by fesper-s          #+#    #+#             */
-/*   Updated: 2022/12/31 17:24:11 by fesper-s         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:13:57 by fesper-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,32 @@ int	print_error(char *str)
 
 void	cmd_error(char *cmd)
 {
-	ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putchar_fd('\n', 2);
+	print_error("minishell: ");
+	print_error(cmd);
+	print_error(": command not found\n");
+}
+
+void	error_display(char *cmd)
+{
+	cmd_error(cmd);
+	g_status = 127;
+}
+
+void	dir_error(char *path)
+{
+	ft_putstr_fd("minishell: cd: no such file or directory: ", 2);
+	ft_putstr_fd(path, 2);
+	ft_putstr_fd("\n", 2);
+	g_status = 1;
+}
+
+int	export_error(char *str, char *msg)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(": `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+	g_status = 1;
+	return (1);
 }
